@@ -7,7 +7,7 @@ public class EventBus : IEventBus
 {
     private readonly ActionInvokerCollection _actions = new();
 
-    public void Register<TMessage>(object recipient, Action<TMessage> action)
+    public void Subscribe<TMessage>(object recipient, Action<TMessage> action)
     {
         try
         {
@@ -23,10 +23,10 @@ public class EventBus : IEventBus
         }
     }
 
-    public void Unregister(object recipient)
+    public void Unsubscribe(object recipient)
         => UnregisterCore(recipient, null, null);
 
-    public void Unregister<TMessage>(object recipient, Action<TMessage> action)
+    public void Unsubscribe<TMessage>(object recipient, Action<TMessage> action)
         => UnregisterCore(recipient, action, typeof(TMessage));
 
     public void Send<TMessage>(TMessage message, Type messageTargetType)

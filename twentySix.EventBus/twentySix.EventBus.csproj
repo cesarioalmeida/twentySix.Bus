@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>0.1.0</PackageVersion>
+        <PackageVersion>1.0.0</PackageVersion>
         <Title>twentySix.Bus</Title>
         <Authors>Cesario Almeida</Authors>
         <Description>A simple event bus</Description>

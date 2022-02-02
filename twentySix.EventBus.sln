@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "twentySix.EventBus", "twentySix.EventBus\twentySix.EventBus.csproj", "{2D828D40-3ABE-4827-BF9E-F908DDCA51B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "twentySix.EventBus.Tests", "twentySix.EventBus.Tests\twentySix.EventBus.Tests.csproj", "{473B28C7-70E9-48DA-91E9-7F390FAD691F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{2D828D40-3ABE-4827-BF9E-F908DDCA51B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D828D40-3ABE-4827-BF9E-F908DDCA51B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D828D40-3ABE-4827-BF9E-F908DDCA51B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473B28C7-70E9-48DA-91E9-7F390FAD691F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473B28C7-70E9-48DA-91E9-7F390FAD691F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473B28C7-70E9-48DA-91E9-7F390FAD691F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473B28C7-70E9-48DA-91E9-7F390FAD691F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

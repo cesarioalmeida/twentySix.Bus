@@ -2,11 +2,11 @@
 
 public interface IEventBus
 {
-    void Register<TMessage>(object recipient, Action<TMessage> action);
+    void Subscribe<TMessage>(object recipient, Action<TMessage> action);
 
-    void Unregister(object recipient);
+    void Unsubscribe(object recipient);
 
-    void Unregister<TMessage>(object recipient, Action<TMessage> action);
+    void Unsubscribe<TMessage>(object recipient, Action<TMessage> action);
 
     void Send<TMessage>(TMessage message, Type messageTargetType);
 
