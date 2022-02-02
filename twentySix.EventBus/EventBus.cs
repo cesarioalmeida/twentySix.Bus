@@ -1,0 +1,84 @@
+﻿using twentySix.EventBus.Interfaces;
+using twentySix.EventBus.Internal;
+
+namespace twentySix.EventBus;
+
+public class EventBus : IEventBus
+{
+    private readonly ActionInvokerCollection _actions = new();
+
+    public void Register<TMessage>(object recipient, Action<TMessage> action)
+    {
+        try
+        {
+            Monitor.Enter(_actions);
+
+            var actionInvoker = new WeakReferenceActionInvoker<TMessage>(recipient, action);
+
+            RegisterCore(typeof(TMessage), actionInvoker);
+        }
+        finally
+        {
+            Monitor.Exit(_actions);
+        }
+    }
+
+    public void Unregister(object recipient)
+        => UnregisterCore(recipient, null, null);
+
+    public void Unregister<TMessage>(object recipient, Action<TMessage> action)
+        => UnregisterCore(recipient, action, typeof(TMessage));
+
+    public void Send<TMessage>(TMessage message, Type messageTargetType)
+    {
+        try
+        {
+            Monitor.Enter(_actions);
+
+            _actions.Send(message, messageTargetType, typeof(TMessage));
+        }
+        finally
+        {
+            Monitor.Exit(_actions);
+        }
+
+        Cleanup();
+    }
+
+    public void Send<TMessage>(TMessage message) => Send(message, null);
+
+    public void Send<TMessage, TTarget>(TMessage message) => Send(message, typeof(TTarget));
+
+    private void RegisterCore(Type messageType, IActionInvoker actionInvoker)
+        => _actions.Register(messageType, actionInvoker);
+
+    private void UnregisterCore(object recipient, Delegate action, Type messageType)
+    {
+        try
+        {
+            Monitor.Enter(_actions);
+
+            _actions.Unregister(recipient, action, messageType);
+        }
+        finally
+        {
+            Monitor.Exit(_actions);
+        }
+
+        Cleanup();
+    }
+
+    private void Cleanup()
+    {
+        try
+        {
+            Monitor.Enter(_actions);
+
+            _actions.CleanUp();
+        }
+        finally
+        {
+            Monitor.Exit(_actions);
+        }
+    }
+}

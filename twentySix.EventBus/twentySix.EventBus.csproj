@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>0.1.0</PackageVersion>
+        <Title>twentySix.Bus</Title>
+        <Authors>Cesario Almeida</Authors>
+        <Description>A simple event bus</Description>
+    </PropertyGroup>
+
+</Project>
