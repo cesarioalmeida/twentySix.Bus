@@ -8,13 +8,13 @@ internal class FuzzyDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TV
 
 	public IEnumerable<TValue> Values => _pairs.Select(_ => _.Value);
 
-	public void Add(TKey key, TValue value) => _pairs.Add(key, value);
+	protected void Add(TKey key, TValue value) => _pairs.Add(key, value);
 
-	public void Remove(TKey key) => _pairs.Remove(key);
+	protected void Remove(TKey key) => _pairs.Remove(key);
 
-	public bool TryGetValue(TKey key, out TValue value) => _pairs.TryGetValue(key, out value);
+	protected bool TryGetValue(TKey key, out TValue value) => _pairs.TryGetValue(key, out value);
 
-	public IEnumerable<TValue> GetValues(TKey key) => key is not null ? GetValuesCore(key) : Values;
+	protected IEnumerable<TValue> GetValues(TKey key) => key is not null ? GetValuesCore(key) : Values;
 
 	private IEnumerable<TValue> GetValuesCore(TKey key)
 	{

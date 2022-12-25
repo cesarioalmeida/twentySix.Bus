@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using twentySix.EventBus.Interfaces;
 
@@ -68,5 +69,45 @@ public class EventBusTests
     {
         _target.Send("yes");
         Assert.Pass();
+    }
+    
+    [Test]
+    public void Unsubscribe_TwoSubscriptions_DoesNotReceive()
+    {
+        var result1 = false;
+        var result2 = false;
+        
+        void IntSubscription(int s) => result2 = s.Equals(1);
+
+        _target.Subscribe<string>(this, s => result1 = s.Equals("yes"));
+        _target.Subscribe(this, (Action<int>) IntSubscription);
+        
+        _target.Unsubscribe(this);
+        
+        _target.Send("yes");
+        _target.Send(1);
+        
+        Assert.IsFalse(result1);
+        Assert.IsFalse(result2);
+    }
+    
+    [Test]
+    public void Unsubscribe_OneSubscriptions_ReceivesOne()
+    {
+        var result1 = false;
+        var result2 = false;
+        
+        var intSubscription = new Action<int>(s => result2 = s.Equals(1));
+
+        _target.Subscribe<string>(this, s => result1 = s.Equals("yes"));
+        _target.Subscribe(this, intSubscription);
+        
+        _target.Unsubscribe(this, intSubscription);
+        
+        _target.Send("yes");
+        _target.Send(1);
+        
+        Assert.IsTrue(result1);
+        Assert.IsFalse(result2);
     }
 }

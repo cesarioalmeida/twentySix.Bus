@@ -1,66 +1,65 @@
-﻿namespace twentySix.EventBus.Internal;
-
-internal class ActionInvokerCollection : FuzzyDictionary<Type, List<IActionInvoker>>
+﻿namespace twentySix.EventBus.Internal
 {
-    public void Register(Type messageType, IActionInvoker actionInvoker)
+    internal class ActionInvokerCollection : FuzzyDictionary<Type, List<IActionInvoker>>
     {
-        if (!TryGetValue(messageType, out var value))
+        public void Register(Type messageType, IActionInvoker actionInvoker)
         {
-            value = new List<IActionInvoker>();
-            Add(messageType, value);
-        }
-
-        value.Add(actionInvoker);
-    }
-
-    public void CleanUp()
-    {
-        var list = new List<KeyValuePair<Type, List<IActionInvoker>>>();
-
-        foreach (var item in this)
-        {
-            foreach (var item2 in new List<IActionInvoker>(item.Value).Where(item2 => item2.Target is null))
+            if (!TryGetValue(messageType, out var value))
             {
-                item.Value.Remove(item2);
+                value = new List<IActionInvoker>();
+                Add(messageType, value);
             }
 
-            if (item.Value.Count == 0)
+            value.Add(actionInvoker);
+        }
+
+        public void CleanUp()
+        {
+            var list = new List<KeyValuePair<Type, List<IActionInvoker>>>();
+
+            foreach (var item in this)
             {
-                list.Add(item);
+                foreach (var item2 in new List<IActionInvoker>(item.Value).Where(item2 => item2.Target is null))
+                {
+                    item.Value.Remove(item2);
+                }
+
+                if (item.Value.Count == 0)
+                {
+                    list.Add(item);
+                }
+            }
+
+            for (var index = 0; index < list.Count; index++)
+            {
+                Remove(list[index].Key);
             }
         }
 
-        foreach (var item3 in list)
+        public void Unregister(object recipient, Delegate action, Type messageType)
         {
-            Remove(item3.Key);
-        }
-    }
-
-    public void Unregister(object recipient, Delegate action, Type messageType)
-    {
-        if (recipient is null)
-        {
-            return;
-        }
-
-        foreach (var value in GetValues(messageType))
-        {
-            foreach (var item in value)
+            if (recipient is null)
             {
-                item.ClearIfMatch(action, recipient);
+                return;
+            }
+
+            foreach (var value in GetValues(messageType))
+            {
+                for (var index = 0; index < value.Count; index++)
+                {
+                    value[index].ClearIfMatch(action, recipient);
+                }
             }
         }
-    }
 
-    public void Send(object message, Type messageTargetType, Type messageType)
-    {
-        foreach (var value in GetValues(messageType))
+        public void Send(object message, Type messageTargetType, Type messageType)
         {
-            var array = value.ToArray();
-
-            foreach (var actionInvoker in array)
+            foreach (var value in GetValues(messageType))
             {
-                actionInvoker.ExecuteIfMatch(messageTargetType, message);
+                for (var index = 0; index < value.Count; index++)
+                {
+                    value[index].ExecuteIfMatch(messageTargetType, message);
+                }
             }
         }
     }

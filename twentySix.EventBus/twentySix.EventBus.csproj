@@ -1,14 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
         <Title>twentySix.Bus</Title>
         <Authors>Cesario Almeida</Authors>
         <Description>A simple event bus</Description>
+        <LangVersion>11</LangVersion>
+        <AssemblyVersion>2.0.0</AssemblyVersion>
+        <FileVersion>2.0.0</FileVersion>
     </PropertyGroup>
 
 </Project>

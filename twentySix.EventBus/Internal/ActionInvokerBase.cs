@@ -8,12 +8,12 @@ internal abstract class ActionInvokerBase : IActionInvoker
 
     protected abstract string MethodName { get; }
 
-    public ActionInvokerBase(object target) => _targetReference = target is null ? null : new WeakReference(target);
+    protected ActionInvokerBase(object target) => _targetReference = target is null ? null : new WeakReference(target);
 
     void IActionInvoker.ExecuteIfMatch(Type messageTargetType, object parameter)
     {
         var target = Target;
-        
+
         if (target is not null && (messageTargetType is null || messageTargetType.IsInstanceOfType(target)))
         {
             Execute(parameter);
@@ -23,12 +23,14 @@ internal abstract class ActionInvokerBase : IActionInvoker
     void IActionInvoker.ClearIfMatch(Delegate action, object recipient)
     {
         var target = Target;
-        
-        if (recipient == target && ((object)action is null || action.Method.Name == MethodName))
+
+        if (recipient != target || ((object) action is not null && action.Method.Name != MethodName))
         {
-            _targetReference = null;
-            ClearCore();
+            return;
         }
+        
+        _targetReference = null;
+        ClearCore();
     }
 
     protected abstract void Execute(object parameter);

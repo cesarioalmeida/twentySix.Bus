@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "twentySix.EventBus", "twent
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "twentySix.EventBus.Tests", "twentySix.EventBus.Tests\twentySix.EventBus.Tests.csproj", "{473B28C7-70E9-48DA-91E9-7F390FAD691F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "twentySix.Bus.Benchmarks", "twentySix.Bus.Benchmarks\twentySix.Bus.Benchmarks.csproj", "{348A5B22-6C35-4F5D-8796-57E7DD37D5F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{473B28C7-70E9-48DA-91E9-7F390FAD691F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{473B28C7-70E9-48DA-91E9-7F390FAD691F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{473B28C7-70E9-48DA-91E9-7F390FAD691F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348A5B22-6C35-4F5D-8796-57E7DD37D5F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348A5B22-6C35-4F5D-8796-57E7DD37D5F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348A5B22-6C35-4F5D-8796-57E7DD37D5F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348A5B22-6C35-4F5D-8796-57E7DD37D5F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
