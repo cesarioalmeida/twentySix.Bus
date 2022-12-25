@@ -36,13 +36,12 @@ public class EventBus : IEventBus
             Monitor.Enter(_actions);
 
             _actions.Send(message, messageTargetType, typeof(TMessage));
+            _actions.CleanUp();
         }
         finally
         {
             Monitor.Exit(_actions);
         }
-
-        Cleanup();
     }
 
     public void Send<TMessage>(TMessage message) => Send(message, null);
@@ -59,21 +58,6 @@ public class EventBus : IEventBus
             Monitor.Enter(_actions);
 
             _actions.Unregister(recipient, action, messageType);
-        }
-        finally
-        {
-            Monitor.Exit(_actions);
-        }
-
-        Cleanup();
-    }
-
-    private void Cleanup()
-    {
-        try
-        {
-            Monitor.Enter(_actions);
-
             _actions.CleanUp();
         }
         finally
