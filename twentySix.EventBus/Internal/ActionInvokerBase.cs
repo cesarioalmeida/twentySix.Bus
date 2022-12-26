@@ -12,9 +12,7 @@ internal abstract class ActionInvokerBase : IActionInvoker
 
     void IActionInvoker.ExecuteIfMatch(Type messageTargetType, object parameter)
     {
-        var target = Target;
-
-        if (target is not null && (messageTargetType is null || messageTargetType.IsInstanceOfType(target)))
+        if (Target is not null && (messageTargetType is null || messageTargetType.IsInstanceOfType(Target)))
         {
             Execute(parameter);
         }
@@ -22,9 +20,7 @@ internal abstract class ActionInvokerBase : IActionInvoker
 
     void IActionInvoker.ClearIfMatch(Delegate action, object recipient)
     {
-        var target = Target;
-
-        if (recipient != target || ((object) action is not null && action.Method.Name != MethodName))
+        if (recipient != Target || ((object) action is not null && action.Method.Name != MethodName))
         {
             return;
         }

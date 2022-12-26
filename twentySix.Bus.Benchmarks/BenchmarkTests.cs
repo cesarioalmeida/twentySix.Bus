@@ -7,6 +7,10 @@ namespace twentySix.Bus.Benchmarks;
 public class BenchmarkTests
 {
     private const int NumberOfTrials = 1000;
+    private const string StringValue = "test";
+    private const int IntValue = 1;
+    private readonly Action<string> _actionValue = _ => {};
+
     private EventBus.EventBus _bus;
     public static void Main()
     {
@@ -23,25 +27,21 @@ public class BenchmarkTests
     [Benchmark]
     public void Subscription_Unsubscription()
     {
-        var sub = new Action<string>(_ => {});
-
         for (var i = 0; i < NumberOfTrials; i++)
         {
-            _bus.Subscribe(this, sub);
-            _bus.Unsubscribe(this, sub);
+            _bus.Subscribe(this, _actionValue);
+            _bus.Unsubscribe(this, _actionValue);
         }
     }
     
     [Benchmark]
     public void Subscription_Send_Unsubscription()
     {
-        var sub = new Action<string>(_ => {});
-
         for (var i = 0; i < NumberOfTrials; i++)
         {
-            _bus.Subscribe(this, sub);
-            _bus.Send("test");
-            _bus.Unsubscribe(this, sub);
+            _bus.Subscribe(this, _actionValue);
+            _bus.Send(StringValue);
+            _bus.Unsubscribe(this, _actionValue);
         }
     }
     
@@ -50,7 +50,7 @@ public class BenchmarkTests
     {
         for (var i = 0; i < NumberOfTrials; i++)
         {
-            _bus.Send(1);
+            _bus.Send(IntValue);
         }
     }
 }

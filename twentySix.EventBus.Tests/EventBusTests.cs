@@ -110,4 +110,28 @@ public class EventBusTests
         Assert.IsTrue(result1);
         Assert.IsFalse(result2);
     }
+    
+    [Test]
+    public void Unsubscribe_MultipleClasses_OtherReceives()
+    {
+        var result1 = false;
+        var result2 = false;
+        void StringAction1(string s) => result1 = s.Equals("yes");
+        void StringAction2(string s) => result2 = s.Equals("yes");
+        var secondTarget = new Test2 { Bus = _target };
+        
+        _target.Subscribe(this, (Action<string>) StringAction1);
+        secondTarget.Bus.Subscribe(this, (Action<string>) StringAction2);
+        _target.Unsubscribe(this, (Action<string>) StringAction1);
+        
+        _target.Send("yes");
+
+        Assert.IsFalse(result1);
+        Assert.IsTrue(result2);
+    }
+
+    private class Test2
+    {
+        public IEventBus Bus { get; set; }
+    }
 }
