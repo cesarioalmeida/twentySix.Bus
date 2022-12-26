@@ -1,4 +1,6 @@
-﻿namespace twentySix.EventBus.Internal;
+﻿using System.Runtime.InteropServices;
+
+namespace twentySix.EventBus.Internal;
 
 internal abstract class ActionInvokerBase : IActionInvoker
 {
