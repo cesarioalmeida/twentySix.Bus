@@ -19,11 +19,8 @@
 
             foreach (var item in this)
             {
-                foreach (var item2 in item.Value.ToArray().Where(item2 => item2.Target is null))
-                {
-                    item.Value.Remove(item2);
-                }
-
+                item.Value.RemoveAll(_ => _.Target is null);
+                
                 if (item.Value.Count == 0)
                 {
                     list.Add(item);
