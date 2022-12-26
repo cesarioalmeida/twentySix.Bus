@@ -15,21 +15,14 @@
 
         public void CleanUp()
         {
-            var list = new List<KeyValuePair<Type, List<IActionInvoker>>>();
-
             foreach (var item in this)
             {
                 item.Value.RemoveAll(_ => _.Target is null);
-                
-                if (item.Value.Count == 0)
-                {
-                    list.Add(item);
-                }
-            }
 
-            foreach (var item in list)
-            {
-                Remove(item.Key);
+                if (!item.Value.Any())
+                {
+                    Remove(item.Key);
+                }
             }
         }
 
