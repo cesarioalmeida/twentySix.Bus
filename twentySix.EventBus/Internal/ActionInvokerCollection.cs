@@ -19,7 +19,7 @@
 
             foreach (var item in this)
             {
-                foreach (var item2 in item.Value.ToList().Where(item2 => item2.Target is null))
+                foreach (var item2 in item.Value.ToArray().Where(item2 => item2.Target is null))
                 {
                     item.Value.Remove(item2);
                 }
@@ -30,9 +30,9 @@
                 }
             }
 
-            for (var index = 0; index < list.Count; index++)
+            foreach (var item in list)
             {
-                Remove(list[index].Key);
+                Remove(item.Key);
             }
         }
 
