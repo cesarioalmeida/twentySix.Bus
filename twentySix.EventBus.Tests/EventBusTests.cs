@@ -67,8 +67,13 @@ public class EventBusTests
     [Test]
     public void Subscribe_NoSubscriptions_DoesNotReceive()
     {
-        _target.Send("yes");
-        Assert.Pass();
+        var result1 = false;
+        
+        _target.Subscribe<string>(this, s => result1 = s.Equals("yes"));
+        
+        _target.Send(1);
+        
+        Assert.IsFalse(result1);
     }
     
     [Test]

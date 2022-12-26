@@ -24,19 +24,9 @@ internal class FuzzyDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TV
 		}
 	}
 
-	IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
-	{
-		foreach (var (key, value) in _pairs)
-		{
-			yield return new KeyValuePair<TKey, TValue>(key, value);
-		}
-	}
+	IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() 
+		=> ((IEnumerable<KeyValuePair<TKey, TValue>>) _pairs).GetEnumerator();
 
 	IEnumerator IEnumerable.GetEnumerator()
-	{
-		foreach (var (key, value) in _pairs)
-		{
-			yield return new KeyValuePair<TKey, TValue>(key, value);
-		}
-	}
+		=> _pairs.GetEnumerator();
 }

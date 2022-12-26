@@ -1,4 +1,6 @@
-﻿namespace twentySix.EventBus.Internal
+﻿using System.Runtime.InteropServices;
+
+namespace twentySix.EventBus.Internal
 {
     internal class ActionInvokerCollection : FuzzyDictionary<Type, List<IActionInvoker>>
     {
@@ -35,9 +37,9 @@
 
             foreach (var value in GetValues(messageType))
             {
-                for (var index = 0; index < value.Count; index++)
+                foreach (var item in CollectionsMarshal.AsSpan(value))
                 {
-                    value[index].ClearIfMatch(action, recipient);
+                    item.ClearIfMatch(action, recipient);
                 }
             }
         }
@@ -46,9 +48,9 @@
         {
             foreach (var value in GetValues(messageType))
             {
-                for (var index = 0; index < value.Count; index++)
+                foreach (var item in CollectionsMarshal.AsSpan(value))
                 {
-                    value[index].ExecuteIfMatch(messageTargetType, message);
+                    item.ExecuteIfMatch(messageTargetType, message);
                 }
             }
         }

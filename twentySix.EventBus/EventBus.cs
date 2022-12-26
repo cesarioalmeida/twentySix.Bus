@@ -14,7 +14,6 @@ public class EventBus : IEventBus
             Monitor.Enter(_actions);
 
             var actionInvoker = new WeakReferenceActionInvoker<TMessage>(recipient, action);
-
             RegisterCore(typeof(TMessage), actionInvoker);
         }
         finally
